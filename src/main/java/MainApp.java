@@ -23,12 +23,14 @@ public class MainApp {
             String col = input.nextLine();
             mongo.scan(col);
 
-            Scanner inputField = new Scanner(System.in);
-            System.out.print("Enter a Field: ");
-            String field = input.nextLine();
-            mongo.project(col, field);
+//            Scanner inputField = new Scanner(System.in);
+//            System.out.print("Enter a Field: ");
+//            String field = input.nextLine();
+//            mongo.project(col, field);
 
-
+            QueryCriteria queryCriteria1 = new QueryCriteria(2, "age", "GT");
+            QueryCriteria queryCriteria2 = new QueryCriteria(4, "age", "LTE");
+            mongo.filter(col, "AND", queryCriteria1, queryCriteria2 );
 
 
 //            List<String> dbs = mongo.listDatabaseNames().into(new LinkedList<>());

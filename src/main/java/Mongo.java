@@ -7,6 +7,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 
+import java.util.List;
+
 import static com.mongodb.client.model.Projections.*;
 
 
@@ -63,4 +65,64 @@ public class Mongo implements IDBOps {
         System.out.println(jsonArray);
         return jsonArray;
     }
+
+    @Override
+    public JSONArray filter(String col, String operator, QueryCriteria... queryCriteria) {
+
+        MongoCollection collection = db.getCollection(col);
+        JSONArray jsonArray = new JSONArray();
+        Document queryDoc = getQueryDoc(operator, queryCriteria);
+
+        MongoCursor<Document> cursor = collection.find(queryDoc).iterator();
+
+        while(cursor.hasNext()) {
+            Document doc = cursor.next();
+            jsonArray.add(doc);
+        }
+        System.out.println(jsonArray);
+
+        return jsonArray;
+    }
+
+    public Document getQueryDoc(String operator, QueryCriteria... queryCriteria) {
+
+        Document query = null;
+        BasicDBList criteria = new BasicDBList();
+
+        for(QueryCriteria crit: queryCriteria) {
+            Document criterion = null;
+
+            switch(crit.getOperator()) {
+                case "EQ":
+                    criterion = new Document(crit.getField(), new Document("$eq",crit.getValue()));
+                    break;
+                case "GT":
+                    criterion = new Document(crit.getField(), new Document("$gt",crit.getValue()));
+                    break;
+                case "LT":
+                    criterion = new Document(crit.getField(), new Document("$lt",crit.getValue()));
+                    break;
+                case "GTE":
+                    criterion = new Document(crit.getField(), new Document("$gte",crit.getValue()));
+                    break;
+                case "LTE":
+                    criterion = new Document(crit.getField(), new Document("$lte",crit.getValue()));
+                    break;
+                case "NE":
+                    criterion = new Document(crit.getField(), new Document("$ne",crit.getValue()));
+                    break;
+                default: System.out.println("Invalid Operator");
+            }
+            criteria.add(criterion);
+        }
+
+        if(operator == "AND") {
+            query = new Document("$and", criteria);
+        } else if(operator == "OR") {
+            query = new Document("$or", criteria);
+        }
+
+        return query;
+    }
+
 }
