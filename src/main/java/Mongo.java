@@ -31,7 +31,6 @@ public class Mongo implements IDBOps {
         // check connection
 
         MongoCollection collection = db.getCollection(col);
-//        db.getCollection(col).find().projection().iterator();
         MongoCursor<Document> cursor = collection.find().iterator();
         JSONArray jsonArray = new JSONArray();
         while(cursor.hasNext()) {
@@ -53,10 +52,8 @@ public class Mongo implements IDBOps {
             projDoc.append(field, 1);
             projDoc.append("_id", 0);
         }
-        // don't return default id key
-//        System.out.println(projDoc.toJson());
+
         MongoCursor<Document> cursor = collection.find().projection(projDoc).iterator();
-//        DBCursor cursor = collection.find().projection(fields(include("name"),excludeId()));
 
         while(cursor.hasNext()) {
             Document doc = cursor.next();

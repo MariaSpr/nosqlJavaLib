@@ -18,7 +18,12 @@ public class MainApp {
 
                 Cassandra cass = new Cassandra();
                 cass.openConnection();
-                cass.scan("cats");
+//                cass.scan("cats");
+//                cass.project("cats", "name", "age", "color");
+            QueryCriteria queryCriteria1 = new QueryCriteria(1, "age", "GTE");
+            QueryCriteria queryCriteria2 = new QueryCriteria(4, "age", "LT");
+            QueryCriteria queryCriteria3 = new QueryCriteria("white", "color", "EQ");
+            cass.filter("cats", "AND", queryCriteria1, queryCriteria2);
 //            Mongo mongo = new Mongo();
 //            mongo.openConnection();
 
