@@ -17,7 +17,7 @@ public class MainApp {
         try {
 
                 Cassandra cass = new Cassandra();
-                cass.openConnection();
+                cass.openConnection("127.0.0.1", 0, "testKS");
 //                cass.scan("cats");
 //                cass.project("cats", "name", "age", "color");
             QueryCriteria queryCriteria1 = new QueryCriteria(1, "age", "GTE");
@@ -25,7 +25,7 @@ public class MainApp {
             QueryCriteria queryCriteria3 = new QueryCriteria("white", "color", "EQ");
             cass.filter("cats", "AND", queryCriteria1, queryCriteria2);
 //            Mongo mongo = new Mongo();
-//            mongo.openConnection();
+//            mongo.openConnection("localhost", 27017, "testDB");
 
 //            Scanner input = new Scanner(System.in);
 //            System.out.print("Enter a collection: ");

@@ -10,19 +10,20 @@ public class Cassandra implements IDBOps {
     private String db = null;
     private Cluster cluster;
     private Session session;
-    private String node = "127.0.0.1";
+    private boolean isConnected = false;
+//    private String node = "127.0.0.1";
 
 
     @Override
-    public void openConnection() {
+    public void openConnection(String node, Integer port, String databaseName) {
 
         cluster= Cluster.builder().addContactPoint(node).build();
         session = cluster.connect();
 
-        db = "testKS";
+        db = databaseName;
         session.execute("CREATE KEYSPACE IF NOT EXISTS "+db+" WITH REPLICATION={'class':'SimpleStrategy', 'replication_factor': 1};");
         session.execute("USE "+db);
-
+        isConnected = true;
     }
 
     @Override

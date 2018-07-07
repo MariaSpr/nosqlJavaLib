@@ -16,12 +16,15 @@ public class Mongo implements IDBOps {
 
     private MongoDatabase db = null;
     private MongoClient mongoClient;
+    private boolean isConnected = false;
 
     @Override
-    public void openConnection() {
+    public void openConnection(String node, Integer port, String databaseName) {
         // connect
-        MongoClient mongo = new MongoClient("localhost", 27017);
-        db = mongo.getDatabase("testDB");
+//        mongoClient = new MongoClient("localhost", 27017);
+        mongoClient = new MongoClient(node, port);
+        db = mongoClient.getDatabase(databaseName);
+        isConnected = true;
 
     }
 
