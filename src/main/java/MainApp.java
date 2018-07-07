@@ -15,31 +15,33 @@ import java.util.Scanner;
 public class MainApp {
     public static void main(String[] args){
         try {
-            Mongo mongo = new Mongo();
-            mongo.openConnection();
 
-            Scanner input = new Scanner(System.in);
-            System.out.print("Enter a collection: ");
-            String col = input.nextLine();
-            mongo.scan(col);
+                Cassandra cass = new Cassandra();
+                cass.openConnection();
+                cass.scan("cats");
+//            Mongo mongo = new Mongo();
+//            mongo.openConnection();
+
+//            Scanner input = new Scanner(System.in);
+//            System.out.print("Enter a collection: ");
+//            String col = input.nextLine();
+//            mongo.scan(col);
 
 //            Scanner inputField = new Scanner(System.in);
 //            System.out.print("Enter a Field: ");
 //            String field = input.nextLine();
 //            mongo.project(col, field);
 
-            QueryCriteria queryCriteria1 = new QueryCriteria(2, "age", "GT");
-            QueryCriteria queryCriteria2 = new QueryCriteria(4, "age", "LTE");
-            mongo.filter(col, "AND", queryCriteria1, queryCriteria2 );
+//            QueryCriteria queryCriteria1 = new QueryCriteria(2, "age", "GT");
+//            QueryCriteria queryCriteria2 = new QueryCriteria(4, "age", "LTE");
+//            mongo.filter(col, "AND", queryCriteria1, queryCriteria2 );
+//
+//            QueryCriteria stringQuery = new QueryCriteria("Svouras", "name", "EQ");
+//            QueryCriteria stringQuery2 = new QueryCriteria("Fystiki", "name", "EQ");
+//
+//            mongo.filter(col, "OR", stringQuery, stringQuery2 );
 
-            QueryCriteria stringQuery = new QueryCriteria("Svouras", "name", "EQ");
-            QueryCriteria stringQuery2 = new QueryCriteria("Fystiki", "name", "EQ");
 
-            mongo.filter(col, "OR", stringQuery, stringQuery2 );
-
-
-//            List<String> dbs = mongo.listDatabaseNames().into(new LinkedList<>());
-//            System.out.println(dbs);
 
 
         } catch (Exception e) {
