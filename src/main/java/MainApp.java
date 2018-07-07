@@ -32,6 +32,11 @@ public class MainApp {
             QueryCriteria queryCriteria2 = new QueryCriteria(4, "age", "LTE");
             mongo.filter(col, "AND", queryCriteria1, queryCriteria2 );
 
+            QueryCriteria stringQuery = new QueryCriteria("Svouras", "name", "EQ");
+            QueryCriteria stringQuery2 = new QueryCriteria("Fystiki", "name", "EQ");
+
+            mongo.filter(col, "OR", stringQuery, stringQuery2 );
+
 
 //            List<String> dbs = mongo.listDatabaseNames().into(new LinkedList<>());
 //            System.out.println(dbs);
