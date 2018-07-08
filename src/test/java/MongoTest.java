@@ -39,4 +39,9 @@ public class MongoTest {
         QueryCriteria queryCriteria2 = new QueryCriteria(4, "age", "LTE");
             mongo.filter("cats", "AND", queryCriteria1, queryCriteria2 );
     }
+
+    @Test
+    public void closeConnection() {
+        mongo.closeConnection();
+    }
 }

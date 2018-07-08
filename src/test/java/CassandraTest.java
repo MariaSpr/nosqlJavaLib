@@ -40,4 +40,9 @@ public class CassandraTest {
         QueryCriteria queryCriteria2 = new QueryCriteria(4, "age", "LTE");
         cass.filter("cats", "AND", queryCriteria1, queryCriteria2 );
     }
+
+    @Test
+    public void closeConnection() {
+        cass.closeConnection();
+    }
 }
