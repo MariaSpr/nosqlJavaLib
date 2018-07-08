@@ -25,6 +25,7 @@ public class Mongo implements IDBOps {
         mongoClient = new MongoClient(node, port);
         db = mongoClient.getDatabase(databaseName);
         isConnected = true;
+        System.out.println("Connection established.");
 
     }
 
