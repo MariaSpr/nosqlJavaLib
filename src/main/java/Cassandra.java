@@ -27,6 +27,16 @@ public class Cassandra implements IDBOps {
     }
 
     @Override
+    public void closeConnection() {
+        if(session !=null && cluster!= null) {
+            session.close();
+            cluster.close();
+            session = null;
+            cluster = null;
+        }
+    }
+
+    @Override
     public JSONArray scan(String col) {
         JSONArray jsonArray = new JSONArray();
 

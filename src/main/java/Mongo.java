@@ -30,6 +30,17 @@ public class Mongo implements IDBOps {
     }
 
     @Override
+    public void closeConnection() {
+        if(mongoClient !=null && db!=null) {
+            mongoClient.close();
+            mongoClient = null;
+            db = null;
+            isConnected = false;
+            System.out.println("Connection closed.");
+        }
+    }
+
+    @Override
     public JSONArray scan(String col) {
 
         // check connection
